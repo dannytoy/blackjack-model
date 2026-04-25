@@ -27,6 +27,15 @@ def train_decision_tree(data_path):
 
     joblib.dump(dt_model, 'baseline_tree.pkl')
 
+    importances = dt_model.feature_importances_
+
+    plt.figure(figsize=(8, 5))
+    plt.barh(features, importances, color='#10b981')
+    plt.xlabel('Mathematical Importance (Gini)')
+    plt.title('Baseline Model: Feature Importance')
+    plt.gca().invert_yaxis()
+    plt.savefig('visuals/feature_importance.png', dpi=300, bbox_inches='tight')
+
     plt.figure(figsize=(24, 12))
     plot_tree(
         dt_model,
@@ -36,10 +45,8 @@ def train_decision_tree(data_path):
         rounded=True,
         fontsize=8
     )
-
-    vis_path = 'visuals/basic_strategy_tree.png'
     plt.title("Decision Tree: Learned Blackjack Basic Strategy (True Count = 0)", fontsize=16)
-    plt.savefig(vis_path, dpi=300, bbox_inches='tight')
+    plt.savefig('visuals/basic_strategy_tree.png', dpi=300, bbox_inches='tight')
 
 if __name__ == "__main__":
     train_decision_tree("cleaned_blkjckhands.csv")
