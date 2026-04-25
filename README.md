@@ -2,8 +2,8 @@
 
 ### Public Site
 
-* Main Site Hosted on Vercel Here: TBD
-* Backend Hosted on Render Here: TBD
+* Main Site Hosted on Vercel Here: https://blackjack-model.vercel.app
+* Backend Hosted on Render Here: https://blackjack-model-backend.onrender.com
 * Render will spin down with inactivity, so open link if getting error while searching for users
 
 ### Prerequisites

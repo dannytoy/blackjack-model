@@ -8,12 +8,14 @@ app = FastAPI(title="Blackjack ML Engine")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://blackjack-model.vercel.app",
+        "http://localhost:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 try:
     print("Loading ML Models...")
     baseline_tree = joblib.load('baseline_tree.pkl')
@@ -32,7 +34,6 @@ class HandRequest(BaseModel):
 # --- HARDCODED LOGIC ---
 
 def get_basic_strategy(total: int, upcard: int, is_soft: int) -> str:
-    """Standard Casino Basic Strategy (Simplified for Hit/Stand)."""
     if is_soft:
         if total <= 17: return "Hit"
         if total == 18 and upcard in [9, 10, 11]: return "Hit"
@@ -45,7 +46,6 @@ def get_basic_strategy(total: int, upcard: int, is_soft: int) -> str:
         return "Hit"
 
 def get_illustrious_18_deviation(total: int, upcard: int, true_count: int, base_action: str) -> str:
-    """Card Counting Deviations for Hit/Stand decisions."""
     if total == 16 and upcard == 10 and true_count >= 0: return "Stand"
     if total == 15 and upcard == 10 and true_count >= 4: return "Stand"
     if total == 16 and upcard == 9 and true_count >= 5: return "Stand"
